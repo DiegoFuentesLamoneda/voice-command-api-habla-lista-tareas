@@ -1,0 +1,21 @@
+{
+  "name": "Voice Command API",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "workbench.editorAssociations": {
+          "*.md": "vscode.markdown.preview.editor"
+        }
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-azuretools.vscode-docker",
+        "4geeks.4geeks-student"
+      ]
+    }
+  },
+  "forwardPorts": [8000, 5173],
+  "postCreateCommand": "python -m pip install --upgrade pip uv && uv sync && cd frontend && npm install"
+}

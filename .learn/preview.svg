@@ -1,0 +1,72 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0A1026"/>
+      <stop offset="1" stop-color="#151B3B"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="142" y1="160" x2="560" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#1F2A5A"/>
+      <stop offset="1" stop-color="#273469"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="1010" cy="120" r="180" fill="#1B2450" opacity="0.45"/>
+  <circle cx="140" cy="560" r="200" fill="#111A42" opacity="0.35"/>
+
+  <rect x="70" y="70" width="1060" height="490" rx="24" fill="#0E1533" stroke="#2B3A7A"/>
+
+  <g filter="url(#shadow)">
+    <rect x="110" y="120" width="430" height="350" rx="20" fill="url(#card)" stroke="#3950A0"/>
+  </g>
+
+  <circle cx="230" cy="250" r="58" fill="#0D173C" stroke="url(#accent)" stroke-width="4"/>
+  <rect x="214" y="215" width="32" height="64" rx="16" fill="url(#accent)"/>
+  <rect x="206" y="281" width="48" height="22" rx="11" fill="#22D3EE" opacity="0.9"/>
+  <rect x="220" y="303" width="20" height="22" rx="6" fill="#8B5CF6"/>
+  <path d="M285 230C302 240 302 260 285 270" stroke="#22D3EE" stroke-width="5" stroke-linecap="round"/>
+  <path d="M304 220C327 238 327 262 304 280" stroke="#8B5CF6" stroke-width="5" stroke-linecap="round"/>
+
+  <text x="140" y="370" fill="#DCE8FF" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">
+    /transcribe
+  </text>
+  <text x="140" y="405" fill="#DCE8FF" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">
+    /instruction
+  </text>
+  <text x="140" y="440" fill="#89A3E3" font-family="Inter, Arial, sans-serif" font-size="19">
+    Speech to Text -&gt; Routing JSON
+  </text>
+
+  <g filter="url(#shadow)">
+    <rect x="610" y="120" width="470" height="350" rx="20" fill="url(#card)" stroke="#3950A0"/>
+  </g>
+  <text x="650" y="172" fill="#DCE8FF" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="700">
+    Task Actions
+  </text>
+
+  <rect x="650" y="202" width="390" height="56" rx="14" fill="#1C2A61" stroke="#3E56AC"/>
+  <rect x="668" y="220" width="18" height="18" rx="4" fill="#22D3EE"/>
+  <text x="700" y="235" fill="#DCE8FF" font-family="Inter, Arial, sans-serif" font-size="20">Buy groceries</text>
+
+  <rect x="650" y="272" width="390" height="56" rx="14" fill="#1A2455" stroke="#344A96"/>
+  <rect x="668" y="290" width="18" height="18" rx="4" fill="#8B5CF6"/>
+  <text x="700" y="305" fill="#DCE8FF" font-family="Inter, Arial, sans-serif" font-size="20">Call mom</text>
+
+  <rect x="650" y="342" width="390" height="56" rx="14" fill="#1A2455" stroke="#344A96"/>
+  <rect x="668" y="360" width="18" height="18" rx="4" fill="#223166" stroke="#5F76C4"/>
+  <text x="700" y="375" fill="#DCE8FF" font-family="Inter, Arial, sans-serif" font-size="20">Review PR</text>
+
+  <text x="110" y="535" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="60" font-weight="800">
+    Voice Command API
+  </text>
+  <text x="112" y="572" fill="#93AEF0" font-family="Inter, Arial, sans-serif" font-size="23">
+    FastAPI - Python - Groq - LearnPack
+  </text>
+</svg>

@@ -1,0 +1,13 @@
+[project]
+name = "voice-command-api"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi==0.116.1",
+    "uvicorn[standard]==0.35.0",
+    "groq==0.31.0",
+    "httpx==0.28.1",
+    "python-multipart==0.0.20",
+    "pydantic-settings==2.10.1",
+    "python-dotenv==1.1.1",
+]
