@@ -33,4 +33,6 @@ class Settings(BaseSettings):
 
 @lru_cache
 def get_settings() -> Settings:
-    return Settings()
+    # Los valores llegan del .env en tiempo de ejecucion, asi que el verificador
+    # de tipos cree que falta groq_api_key. Pydantic lo resuelve al arrancar.
+    return Settings()  # pyright: ignore[reportCallIssue]

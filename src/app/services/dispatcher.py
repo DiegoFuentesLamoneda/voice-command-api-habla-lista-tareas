@@ -7,7 +7,7 @@ que ve el frontend cuando llama a la API por su cuenta.
 """
 
 import re
-from typing import Any
+from typing import Any, cast
 
 from fastapi import HTTPException, status
 from pydantic import BaseModel, ValidationError
@@ -133,5 +133,5 @@ def _dump(result: Any) -> Any:
     if isinstance(result, BaseModel):
         return result.model_dump()
     if isinstance(result, list):
-        return [_dump(item) for item in result]
+        return [_dump(item) for item in cast(list[Any], result)]
     return result

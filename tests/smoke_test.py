@@ -15,13 +15,13 @@ from src.app.main import app
 from src.app.api.routes import transcribe as transcribe_route
 from src.app.schemas.voice import InstructionPayload
 from src.app.services import dispatcher, task_store
-from src.app.services.groq_service import _parse_instruction
+from src.app.services.groq_service import _parse_instruction  # pyright: ignore[reportPrivateUsage]
 
 client = TestClient(app)
-results = []
+results: list[tuple[str, bool, object]] = []
 
 
-def check(label, ok, extra=""):
+def check(label: str, ok: bool, extra: object = "") -> None:
     results.append((label, ok, extra))
     status = "PASS" if ok else "FAIL"
     detail = "" if ok else "  -> " + str(extra)
@@ -142,7 +142,7 @@ task_store.reset()
 real_resolver = transcribe_route.resolve_instruction
 
 
-async def fake_resolver(transcription):
+async def fake_resolver(transcription: str) -> InstructionPayload:
     return InstructionPayload(endpoint="/tasks", method="POST", params={"title": "Comprar leche"})
 
 

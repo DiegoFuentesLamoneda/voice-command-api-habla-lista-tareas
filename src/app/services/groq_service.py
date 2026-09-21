@@ -8,7 +8,7 @@ respuesta tenga la forma esperada.
 
 import json
 from functools import lru_cache
-from typing import Any
+from typing import Any, cast
 
 from fastapi import HTTPException, status
 from groq import AsyncGroq, GroqError
@@ -119,23 +119,26 @@ async def resolve_instruction(transcription: str) -> InstructionPayload:
 def _parse_instruction(raw: str | None) -> InstructionPayload:
     """Valida que el LLM haya devuelto el JSON de enrutado que pedimos."""
     try:
-        data = json.loads(raw or "")
+        parsed: object = json.loads(raw or "")
     except json.JSONDecodeError as exc:
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
             detail=f"The model did not return valid JSON: {raw!r}",
         ) from exc
 
-    if not isinstance(data, dict):
+    if not isinstance(parsed, dict):
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
             detail=f"The model returned JSON that is not an object: {raw!r}",
         )
 
+    # json.loads no puede tipar lo que devuelve. A partir de la comprobacion de
+    # arriba sabemos que es un objeto JSON, asi que lo tratamos como tal.
+    data = cast(dict[str, Any], parsed)
+
     # El modelo a veces envuelve los argumentos con otro nombre.
-    params = data.get("params") or data.get("body") or data.get("arguments") or {}
-    if not isinstance(params, dict):
-        params = {}
+    raw_params: object = data.get("params") or data.get("body") or data.get("arguments") or {}
+    params = cast(dict[str, Any], raw_params) if isinstance(raw_params, dict) else {}
 
     try:
         instruction = InstructionPayload(
