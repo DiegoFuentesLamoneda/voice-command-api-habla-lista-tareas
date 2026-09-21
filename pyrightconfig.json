@@ -1,6 +1,0 @@
-{
-  "typeCheckingMode": "strict",
-  "include": ["src", "tests"],
-  "venvPath": ".",
-  "venv": ".venv"
-}
