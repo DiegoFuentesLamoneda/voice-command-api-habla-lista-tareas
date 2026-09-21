@@ -1,19 +1,22 @@
+"""Endpoints CRUD sobre la lista de tareas en memoria."""
+
 from fastapi import APIRouter, HTTPException, status
 
 from src.app.schemas.voice import Task, TaskCreate, TaskReplace, TaskUpdate
+from src.app.services import task_store
 
 router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 
 @router.get("", response_model=list[Task])
 def get_tasks() -> list[Task]:
-    raise_not_implemented("GET /tasks")
+    return [Task(**task) for task in task_store.list_tasks()]
 
 
 @router.post("", response_model=Task, status_code=status.HTTP_201_CREATED)
 def create_task(payload: TaskCreate) -> Task:
-    _ = payload
-    raise_not_implemented("POST /tasks")
+    task = task_store.create_task(title=payload.title.strip(), done=payload.done)
+    return Task(**task)
 
 
 @router.put("/{task_id}", response_model=Task)
@@ -21,8 +24,14 @@ def replace_task(
     task_id: int,
     payload: TaskReplace,
 ) -> Task:
-    _ = (task_id, payload)
-    raise_not_implemented("PUT /tasks/{task_id}")
+    task = task_store.replace_task(
+        task_id,
+        title=payload.title.strip(),
+        done=payload.done,
+    )
+    if task is None:
+        raise_task_not_found(task_id)
+    return Task(**task)
 
 
 @router.patch("/{task_id}", response_model=Task)
@@ -30,18 +39,32 @@ def update_task(
     task_id: int,
     payload: TaskUpdate,
 ) -> Task:
-    _ = (task_id, payload)
-    raise_not_implemented("PATCH /tasks/{task_id}")
+    if payload.title is None and payload.done is None:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Send at least one field to update: 'title' or 'done'.",
+        )
+
+    task = task_store.update_task(
+        task_id,
+        title=payload.title.strip() if payload.title is not None else None,
+        done=payload.done,
+    )
+    if task is None:
+        raise_task_not_found(task_id)
+    return Task(**task)
 
 
 @router.delete("/{task_id}")
 def delete_task(task_id: int) -> dict[str, str]:
-    _ = task_id
-    raise_not_implemented("DELETE /tasks/{task_id}")
+    task = task_store.delete_task(task_id)
+    if task is None:
+        raise_task_not_found(task_id)
+    return {"message": f"Task {task_id} deleted.", "title": task["title"]}
 
 
-def raise_not_implemented(endpoint: str) -> None:
+def raise_task_not_found(task_id: int) -> None:
     raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail=f"Template endpoint pending implementation: {endpoint}",
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail=f"Task {task_id} not found.",
     )

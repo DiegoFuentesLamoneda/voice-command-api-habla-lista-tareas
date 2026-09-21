@@ -13,6 +13,9 @@ class Settings(BaseSettings):
     allowed_origins: Annotated[list[str], NoDecode] = Field(
         default_factory=lambda: ["http://localhost:5173", "http://127.0.0.1:5173"]
     )
+    # En Codespaces o Gitpod el puerto publico cambia en cada sesion, asi que se
+    # permiten por patron en lugar de enumerar cada origen en ALLOWED_ORIGINS.
+    allowed_origin_regex: str | None = r"https://.*\.(app\.github\.dev|gitpod\.io)"
 
     model_config = SettingsConfigDict(
         env_file=".env",
