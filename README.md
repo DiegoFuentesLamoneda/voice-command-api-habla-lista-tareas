@@ -79,7 +79,7 @@ sobre `localhost` o HTTPS.
 | Variable | Por defecto | Para qué sirve |
 | --- | --- | --- |
 | `GROQ_API_KEY` | — | **Obligatoria.** Tu clave de Groq. |
-| `GROQ_MODEL` | `llama-3.1-8b-instant` | Modelo que decide el enrutado. |
+| `GROQ_MODEL` | `openai/gpt-oss-20b` | Modelo que decide el enrutado. |
 | `GROQ_TRANSCRIPTION_MODEL` | `whisper-large-v3-turbo` | Modelo de voz a texto. |
 | `REQUEST_TIMEOUT_SECONDS` | `45` | Timeout de las llamadas a Groq. |
 | `ALLOWED_ORIGINS` | `http://localhost:5173,http://127.0.0.1:5173` | Orígenes permitidos por CORS. |
