@@ -6,6 +6,7 @@ escrita a mano (JSON), lo convierte en texto, reutiliza la logica de
 """
 
 import json
+import logging
 
 from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import ValidationError
@@ -15,6 +16,8 @@ from src.app.schemas.voice import InstructionRequest, TranscribeFlowResponse
 from src.app.services.dispatcher import execute
 from src.app.services.groq_service import resolve_instruction, transcribe_audio
 from src.app.utils.language import normalize_transcription_language
+
+logger = logging.getLogger("voice_command_api")
 
 router = APIRouter(tags=["transcribe"])
 
@@ -37,6 +40,13 @@ async def transcribe_and_run_flow(request: Request) -> TranscribeFlowResponse:
         transcription = await _transcription_from_json(request)
 
     instruction = await resolve_instruction(transcription)
+    logger.info(
+        "transcripcion=%r -> %s %s %s",
+        transcription,
+        instruction.method,
+        instruction.endpoint,
+        instruction.params,
+    )
     result = execute(instruction)
 
     return TranscribeFlowResponse(
@@ -73,6 +83,12 @@ async def _transcription_from_audio(request: Request) -> str:
             detail="The audio file is larger than the 25 MB accepted by Groq.",
         )
 
+    logger.info(
+        "audio recibido: %s, %d bytes, idioma=%s",
+        filename,
+        len(content),
+        language or "auto",
+    )
     return await transcribe_audio(filename, content, language)
 
 

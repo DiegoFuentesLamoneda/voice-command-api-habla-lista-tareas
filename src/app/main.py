@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -8,6 +10,18 @@ from src.app.api.routes.transcribe import router as transcribe_router
 
 
 def create_app() -> FastAPI:
+    # Deja rastro de cada audio y de cada decision del modelo en la consola,
+    # que es lo primero que se mira cuando el flujo de voz no hace lo esperado.
+    # Uvicorn solo configura sus propios loggers, asi que le prestamos sus
+    # manejadores para que estas lineas salgan con el mismo formato.
+    logger = logging.getLogger("voice_command_api")
+    logger.setLevel(logging.INFO)
+    uvicorn_handlers = logging.getLogger("uvicorn.error").handlers
+    if uvicorn_handlers:
+        logger.handlers = uvicorn_handlers
+    else:
+        logging.basicConfig(level=logging.INFO)
+
     settings = get_settings()
     app = FastAPI(
         title="Voice Command Transcription API",
