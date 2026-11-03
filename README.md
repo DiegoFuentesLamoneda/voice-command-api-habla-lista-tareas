@@ -11,6 +11,23 @@ de enrutado salen de la respuesta del modelo.
 
 ---
 
+## 🎥 Demo
+
+Grabación de la aplicación funcionando de punta a punta (62 s, con audio):
+añadir dos tareas hablando, pedir la lista, marcar una como hecha y borrar la otra.
+
+▶️ **[docs/demo.mp4](docs/demo.mp4)** — se reproduce en el navegador al abrirlo en GitHub.
+
+| Lo que digo | Transcripción | Ruta que decide el modelo |
+| --- | --- | --- |
+| «Añade comprar leche a mi lista» | `Añade comprar leche a mi lista` | `POST /tasks` `{"title": "Comprar leche"}` |
+| «Tengo que sacar la basura» | `Tengo que sacar la basura.` | `POST /tasks` `{"title": "Sacar la basura"}` |
+| «Enséñame mi lista» | `Enséñame mi lista.` | `GET /tasks` |
+| «Marca comprar leche como hecha» | `marca comprar leche como hecha` | `PATCH /tasks/1` `{"done": true}` |
+| «Borra la tarea sacar la basura» | `Borra la tarea sacar la basura` | `DELETE /tasks/2` |
+
+---
+
 ## Flujo completo
 
 ```
